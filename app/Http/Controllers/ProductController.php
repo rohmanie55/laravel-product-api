@@ -34,7 +34,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|max:100',
+            'name'=>'required|max:150',
             'description'=>'required',
             'enable'=>'nullable|boolean',
             'images'=>'nullable|array',
@@ -78,9 +78,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'name'=>'required|max:100',
-            'enable'=>'nullable|boolean'
+        $request->validate([
+            'name'=>'required|max:150',
+            'description'=>'required',
+            'enable'=>'nullable|boolean',
+            'images'=>'nullable|array',
+            'categories'=>'nullable|array'
         ]);
 
         $product = DB::transaction(function() use($request,$id){
