@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'enable'=> fake()->boolean(70),
+            'enable'=> fake()->boolean(80),
         ];
     }
 }
