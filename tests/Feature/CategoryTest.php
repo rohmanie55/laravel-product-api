@@ -25,7 +25,7 @@ class CategoryTest extends TestCase
 
     public function test_user_can_save_category()
     {
-        $category = Category::factory()->make()->only('name','enable')->toArray();
+        $category = Category::factory()->make()->only('name','enable');
 
         $response = $this->actingAs($this->user)->postJson(route('category.store'), $category);
 
@@ -38,7 +38,7 @@ class CategoryTest extends TestCase
     public function test_user_can_update_category()
     {
         $category = Category::factory()->create();
-        $input = $category->only('name','enable')->toArray();
+        $input = $category->only('name','enable');
         $input['name']='New Name';
 
         $response = $this->actingAs($this->user)->putJson(route('category.update',$category->id), $input);
@@ -55,8 +55,7 @@ class CategoryTest extends TestCase
 
         $response = $this->actingAs($this->user)->deleteJson(route('category.destroy',$category->id));
 
-        $response->assertStatus(200)
-                 ->assertJson($category);
+        $response->assertStatus(204);
         
         $this->assertDatabaseMissing('categories', ['id'=>$category->id]);
     }

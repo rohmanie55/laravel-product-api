@@ -28,7 +28,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name'=>'required|max:100',
+            'enable'=>'nullable|boolean'
+        ]);
+
+        return response()->json(Category::create($validated), 201);
     }
 
     /**
@@ -40,7 +45,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'name'=>'required|max:100',
+            'enable'=>'nullable|boolean'
+        ]);
+        $category = Category::find($id);
+        $category->fill($validated);
+        $category->save();
+
+        return response()->json($category);
     }
 
     /**
@@ -51,6 +64,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Category::find($id)->delete();
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status'=>'FAIL', 
+                'message'=>$th->getMessage()
+            ], 500);
+        }
+
+        return response()->noContent();
     }
 }
