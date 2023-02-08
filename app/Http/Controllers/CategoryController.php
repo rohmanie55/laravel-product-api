@@ -14,9 +14,15 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = Category::select('id','name','enable')->paging($request->perpage);
+        $datas = Category::select('id','name','enable');
 
-        return response()->json($datas);
+        if($request->perpage){
+            $datas->paging($request->perpage);
+        }
+        return response()->json([
+            'total'=>$datas->count(),
+            'data'=>$datas->get()
+        ]);
     }
 
 

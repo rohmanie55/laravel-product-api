@@ -23,6 +23,17 @@ class CategoryTest extends TestCase
                  ->assertJsonCount(10, 'data');
     }
 
+    public function test_user_can_get_all_category()
+    {
+        Category::factory()->count(15)->create();
+
+        $response = $this->actingAs($this->user)->get(route('category.index'));
+
+        $response->assertStatus(200)
+                 ->assertJson(['total'=>15])
+                 ->assertJsonCount(15, 'data');
+    }
+
     public function test_user_can_save_category()
     {
         $category = Category::factory()->make()->only('name','enable');
