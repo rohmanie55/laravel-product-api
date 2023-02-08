@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,7 +13,7 @@ use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    use DatabaseTruncation;
+    use DatabaseTransactions;
 
     public function test_user_can_get_product()
     {
@@ -47,7 +48,7 @@ class ProductTest extends TestCase
         $images = Image::factory()->count(2)->create(['enable'=>1])->pluck('id')->toArray();
         $categories = Category::factory()->count(1)->create(['enable'=>1])->pluck('id')->toArray();
 
-        $input = $product->only('name','enable');
+        $input = $product->only('name','description','enable');
         $input['name']='New Name';
 
         $response = $this->actingAs($this->user)->putJson(route('product.update',$product->id), array_merge($input,['images'=>$images, 'categories'=>$categories]));

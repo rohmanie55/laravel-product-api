@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,7 +11,7 @@ use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
-    use DatabaseTruncation;
+    use DatabaseTransactions;
 
     public function test_user_can_get_category()
     {
