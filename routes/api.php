@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix'=>'v1'], function(){
     Route::post('login',[AuthController::class,'login'])
         ->name('auth.login');
-        
-    Route::post('logout',[AuthController::class,'logout'])
+
+    Route::group(['middleware'=>'auth'], function(){
+        Route::post('logout',[AuthController::class,'logout'])
         ->middleware('auth')
         ->name('auth.logout');
+
+        Route::resource('category',CategoryController::class)->only('index','store', 'update', 'destroy');
+    });
 });
