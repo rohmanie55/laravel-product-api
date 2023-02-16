@@ -29,7 +29,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function actingAs($user, $driver = null)
     {
-        $token = auth()->tokenById($this->user->id);
+        $token = auth()->tokenById($user->id);
         $this->withHeader('Authorization', "Bearer {$token}");
         parent::actingAs($user);
         
