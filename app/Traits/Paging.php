@@ -17,7 +17,7 @@ trait Paging{
 
         return [
             'total'=>$query->count(),
-            'data' =>$query->offset($page)->limit($perpage)->get()
+            'data' =>$query->offset($page)->limit($perpage??10)->get()
         ];
     }
 }
